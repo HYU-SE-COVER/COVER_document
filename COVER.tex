@@ -17,6 +17,7 @@
 \usepackage{graphics}
 \usepackage{subfigure}
 \usepackage{float}
+\usepackage{booktabs}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
@@ -326,6 +327,168 @@ User can turn on and turn off the matter device from home assistants by clicking
 
 \subsection{\large{Default display of LG Cover}}
 When the LG Cover is not in progress of connecting devices, LG Cover displays date and time, temperature, and humidity on the screen.\\
+
+
+\section{\large{Development Environment}}
+
+\subsection{\large{Choice of hardware development environment}}
+Needs and requirements for Hardware:\\
+\begin{enumerate}[label=\arabic*.]
+\item Support for Bluetooth and Wifi(IEEE 802.11n)\\
+\item Processor should be sufficient enough for all use cases (so no 8bit AVR / PIC)\\
+\item Have decent ecosystem for development\\
+\end{enumerate}
+
+\textbf{ESP32-S3} is a dual-core XTensa LX7 MCU, capable of running at 240 MHz. Apart from its 512 KB of internal SRAM, it also comes with integrated 2.4 GHz, 802.11 b/g/n Wi-Fi and Bluetooth 5 (LE) connectivity that provides long-range support. It has 45 programmable GPIOs and supports a rich set of peripherals. ESP32-S3 supports larger, high-speed octal SPI flash, and PSRAM with configurable data and instruction cache.\\
+As we are not just building a virtual docker image, there is some considerations that have to be made.\\
+
+\begin{itemize}
+\item ESP32-S3 module\\
+ESP32-S3 comes in different form factors, but there is mainly two. One being just a bare chip in QFN56 package, and another being with basic components laid out in PCB with antenna and RF shield. \\
+\begin{enumerate}[label=\arabic*.]
+\item ESP32-S3\\
+\begin{figure}[H]\centering \includegraphics[scale=0.3]{images/esp32-s3.png}\end{figure}
+\begin{itemize}
+\item very difficult to design RF PCB\\
+\item could lead to sub-optimal design\\
+\item not FCC certified\\
+\end{itemize}
+\item ESP32-S3-WROOM-1\\
+\begin{figure}[H]\centering \includegraphics[scale=0.3]{images/esp32-s3-wroom-1.png}\end{figure}
+\begin{itemize}
+\item Easier to implement\\
+\item have ready made pcb / rf shield\\
+\item FCC certified\\
+\item easier to meet local RF regulation laws\\
+\end{itemize}
+\end{enumerate}
+\begin{figure}[H]\centering \includegraphics[scale=0.3]{images/series-comparison.png}\end{figure}
+\end{itemize}
+
+\begin{itemize}
+\item Wi-Fi + Bluetooth 5 (LE)\\
+ESP32-S3 supports a 2.4 GHz Wi-Fi (802.11 b/g/n) with 40 MHz of bandwidth support. The Bluetooth Low Energy subsystem supports long range through Coded PHY and advertisement extension. It also supports higher transmission speed and data throughput, with 2 Mbps PHY. Both Wi-Fi and Bluetooth LE have superior RF performance that is maintained even at high temperatures.\\
+\item Mature Software Support\\
+ESP32-S3 is supported through Espressif’s popular ESP-IDF platform that already powers millions of devices on the market. ESP-IDF comes with rigorous testing, regular updates and an unparalleled support policy. Based on ESP-IDF’s mature software architecture, developers can easily build applications anew or migrate their own applications to the ESP32-S3 platform, and continue working with the trusted ESP-IDF tools and APIs.\\
+\item Security\\
+ESP32-S3 provides all the necessary security requirements for building securely connected devices, without requiring any external components. It supports AES-XTS-based flash encryption, RSA-based secure boot, digital signature and HMAC. ESP32-S3 also has a “World Controller” peripheral that provides two fully-isolated execution environments, which enables the implementation of a trusted-execution environment or a privilege-separation scheme.\\
+\end{itemize}
+
+\subsection{\large{Choice of software development environment}}
+\begin{itemize}
+\item Linux\\
+Linux is based on the Unix operating system which supports a wide range of programming languages, tools, and frameworks. The operating system is used for server environments, desktop applications, and embedded systems development, among others. Linux's command-line utilities are particularly well-suited for working with development boards and IoT devices. Linux is apt for IoT development due to its performance and the extensive community support available for troubleshooting and enhancements.\\
+\item macOS Monterey\\
+macOS Monterey is Apple Inc.'s desktop operating system for Macintosh computers. It is compatible with many development tools, languages, and frameworks essential for different kinds of software development, including web development, mobile app development, and hardware programming.\\
+\item Espressif ESP-IDF\\
+ESP-IDF is Espressif’s official IoT Development Framework for the ESP32, ESP32-S, ESP32-C and ESP32-H series of SoCs. It provides a self-sufficient SDK for any generic application development on these platforms. ESP-IDF currently powers millions of devices in the field, and enables building a variety of network-connected products, ranging from simple light bulbs and toys to big appliances and industrial devices.\\
+\item C/C++\\
+C is a procedural high-level programming language that is designed to provide efficient access to memory and language constructs that map efficiently to machine instructions. C++ supports both procedural and object-oriented programming paradigms, and provides features such as overloading, templates, and exceptions, which are not available in C. The core components of ESP-IDF and the APIs provided for interacting with the ESP32 hardware are written in C. This allows for efficient interaction with the hardware and is suitable for the resource-constrained environments typically associated with embedded systems. The framework provides support for C++ exceptions and other features, allowing developers to leverage the object-oriented aspects of C++ in their ESP32 projects.\\
+\end{itemize}
+
+
+\subsection{\large{Cost}}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.8]{images/cost.png}
+\end{figure}
+
+
+\section{\large{Specification}}
+
+\subsection{\large{System Requirements}}
+\begin{enumerate}[label=\arabic*.]
+
+\item Installation and Registration of LG Cover to ThinQ App\\
+\begin{enumerate}[label=\alph*.]
+\item ThinQ App Registration\\
+\begin{enumerate}[label=\roman*.]
+\item User opens ThinQ app and taps the ‘+’ to add a new device.\\
+\item User selects the ‘matter’ button to add the LG Cover hub.\\
+\item User scans the QR code on LG Cover’s screen to register the device.\\
+\end{enumerate}
+\item Matter API Device Registration\\
+\begin{enumerate}[label=\roman*.]
+\item User opens the home assistant app and navigates to add a new device section.\\
+\item User selects ‘Matter’ or ‘Add Matter device’.\\
+\item User scans the QR code on LG Cover’s screen and confirms the addition to the home assistant.\\
+\end{enumerate}
+\end{enumerate}
+
+\item Registration of LG Cover to Matter API Device\\
+\begin{enumerate}[label=\alph*.]
+\item Matter Devices\\
+\begin{enumerate}[label=\roman*.]
+\item Added via the ThinQ app using the device’s QR code or setup code.\\
+\item Can also be registered directly to home assistants.\\
+\end{enumerate}
+\item ThinQ Devices\\
+\begin{enumerate}[label=\roman*.]
+\item Devices supporting ThinQ are automatically registered to LG Cover through the ThinQ app by scanning the QR code or selecting from a list.\\
+\end{enumerate}
+\item Legacy IR Devices\\
+\begin{enumerate}[label=\roman*.]
+\item Added by sending IR signals to LG Cover via remote controllers, which are matched to the device or manually set by the user.\\
+\end{enumerate}
+\end{enumerate}
+
+\item Device Registration Procedures\\
+\begin{enumerate}[label=\roman*.]
+\item LG Cover pulls device information from ThinQ and relays it to the home assistants.\\
+\item Matter devices communicate directly using Matter API.\\
+\item ThinQ devices send and receive commands via the ThinQ app and LG Cover.\\
+\item IR devices are controlled by converting Matter signals to IR signals via LG Cover.\\
+\end{enumerate}
+
+\item Control Device Using LG Cover\\
+\begin{enumerate}[label=\alph*.]
+\item Matter Devices\\
+\begin{enumerate}[label=\roman*.]
+\item Controlled by clusters and nodes for various functions through the home assistant.\\
+\end{enumerate}
+\item ThinQ Devices\\
+\begin{enumerate}[label=\roman*.]
+\item Simple and complicated controls are supported, with shortcuts for frequently used commands.\\
+\end{enumerate}
+\item IR Devices\\
+\begin{enumerate}[label=\roman*.]
+\item \textbf{LG products}: Full range of commands available for control via LG Cover.\\
+\item \textbf{Non-LG products}: Limited to simple controls such as power on/off.\\
+\end{enumerate}
+\end{enumerate}
+
+\item Default Display for LG Cover\\
+\begin{enumerate}[label=\roman*.]
+\item Displays date, time, temperature, and humidity when not in device connection mode.\\
+\end{enumerate}
+
+\end{enumerate}
+
+\subsection{\large{Technical Specifications}}
+\begin{enumerate}[label=\arabic*.]
+\item \textbf{Connectivity}: Wi-Fi, NFC, Infrared (IR), and Matter protocol support.\\
+\item \textbf{Compatibility}: Works with LG and non-LG devices that support ThinQ, Matter, or IR.\\
+\item \textbf{Security}: Must use secure connections and encrypted communications.\\
+\item \textbf{APIs}: RESTful API for ThinQ for backend integration; Matter API for device communication.\\
+\item \textbf{User Interface}: ThinQ app for setup and control; home assistant interfaces for ongoing interaction.\\
+\item \textbf{Power}: Must support standard household power requirements and include power-saving modes.\\
+\end{enumerate}
+
+\subsection{\large{User Documentation}}
+\begin{enumerate}[label=\arabic*.]
+\item Compliance with Matter standards.\\
+\item Secure QR code generation and scanning.\\
+\item Robust error handling for failed device additions or communications.\\
+\item Thorough testing with various brands and types of devices to ensure compatibility.\\
+\end{enumerate}
+
+\subsection{\large{Quality Assurance}}
+\begin{enumerate}[label=\arabic*.]
+\item Detailed setup guide for LG Cover and device registration.\\
+\item Troubleshooting tips for common issues during setup or use.\\
+\item Contact information for support.\\
+\end{enumerate}
+
 
 \begin{thebibliography}{00}
 \bibitem{b1} Smart Home Market Revenue Trends and growth drivers - 2023. MarketsandMarkets. https://www.marketsandmarkets.com/Market-Reports/smart-homes-and-assisted-living-advanced-technologie-and-global-market-121.html?gclid=EAIaIQobChMImsWklrrwgQMV62sPAh2Blg4VEAAY\\ASAAEgLVQfD\_BwE \\
