@@ -74,7 +74,7 @@ To facilitate seamless integration, the LG Cover adopt a structured setup proces
 Roles & Name & Description\\
 \midrule
 User/Customer & SONG WOOJUNG &User/Customer plays the role of a various ages who needs support with an old LG devices that doesn’t support matter api. Despite the advancements in tech and the ubiquity of smart homes, not every device owned is compatible with the latest standards. This poses a challenge in achieving a cohesive experience, especially when most contemporary hubs primarily cater to the latest models and technologies. Therefore, the LG Cover plays an instrumental role in bridging this gap. While it is equipped to support the Matter API, its design philosophy is to be inclusive. The goal is to serve users like Alex, ensuring that their older, reliable LG devices don't become obsolete. This includes even those devices that don't support LG ThinQ.\\\\
-\begin{tabular}[c]{@{}l@{}}Product\\Designer\end{tabular} & KWON\ \ \ KITAE & A Product Designer is responsible for understanding user needs and business objectives to conceptualize and design products that provide effective solutions; they engage in user research to gather insights, sketch initial design ideas, create wireframes and interactive prototypes, collaborate with cross-functional teams like product managers, engineers, and marketers to refine designs, ensure consistency in brand aesthetics and user experience across products, gather and act on feedback from user testing sessions. Also works with documentation that helps other roles communicate with each other more effectively.\\\\
+Product Designer & KWON\ \ \ KITAE & A Product Designer is responsible for understanding user needs and business objectives to conceptualize and design products that provide effective solutions; they engage in user research to gather insights, sketch initial design ideas, create wireframes and interactive prototypes, collaborate with cross-functional teams like product managers, engineers, and marketers to refine designs, ensure consistency in brand aesthetics and user experience across products, gather and act on feedback from user testing sessions. Also works with documentation that helps other roles communicate with each other more effectively.\\\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -346,15 +346,15 @@ As we are not just building a virtual docker image, there is some considerations
 \item ESP32-S3 module\\
 ESP32-S3 comes in different form factors, but there is mainly two. One being just a bare chip in QFN56 package, and another being with basic components laid out in PCB with antenna and RF shield. \\
 \begin{enumerate}[label=\arabic*.]
-\item ESP32-S3\\
-\begin{figure}[H]\centering \includegraphics[scale=0.3]{images/esp32-s3.png}\end{figure}
+\item ESP32-S3
+\begin{figure}[H]\centering \includegraphics[scale=0.25]{images/esp32-s3.png}\end{figure}
 \begin{itemize}
 \item very difficult to design RF PCB\\
 \item could lead to sub-optimal design\\
 \item not FCC certified\\
 \end{itemize}
-\item ESP32-S3-WROOM-1\\
-\begin{figure}[H]\centering \includegraphics[scale=0.3]{images/esp32-s3-wroom-1.png}\end{figure}
+\item ESP32-S3-WROOM-1
+\begin{figure}[H]\centering \includegraphics[scale=0.25]{images/esp32-s3-wroom-1.png}\end{figure}
 \begin{itemize}
 \item Easier to implement\\
 \item have ready made pcb / rf shield\\
@@ -362,7 +362,27 @@ ESP32-S3 comes in different form factors, but there is mainly two. One being jus
 \item easier to meet local RF regulation laws\\
 \end{itemize}
 \end{enumerate}
-\begin{figure}[H]\centering \includegraphics[scale=0.3]{images/series-comparison.png}\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcccr}
+\toprule
+Ordering Code          & Flash            & PSRAM          \\
+\midrule
+ESP32-S3-WROOM-1-N4    & 4 MB (Quad SPI)  & -              \\
+ESP32-S3-WROOM-1-N8    & 8 MB (Quad SPI)  & -              \\
+ESP32-S3-WROOM-1-N16   & 16 MB (Quad SPI) & -              \\
+ESP32-S3-WROOM-1-H4    & 4 MB (Quad SPI)  & -              \\
+ESP32-S3-WROOM-1-N4R2  & 4 MB (Quad SPI)  & 2 MB (Quad SPI)\\
+ESP32-S3-WROOM-1-N8R2  & 8 MB (Quad SPI)  & 2 MB (Quad SPI)\\
+ESP32-S3-WROOM-1-N16R2 & 16 MB (Quad SPI) & 2 MB (Quad SPI)\\
+ESP32-S3-WROOM-1-N4R8  & 4 MB (Quad SPI)  & 8 MB (Octal SPI)\\
+ESP32-S3-WROOM-1-N8R8  & 8 MB (Quad SPI)  & 8 MB (Octal SPI)\\
+ESP32-S3-WROOM-1-N16R8 & 16 MB (Quad SPI) & 8 MB (Octal SPI)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \end{itemize}
 
 \begin{itemize}
@@ -388,10 +408,18 @@ C is a procedural high-level programming language that is designed to provide ef
 
 
 \subsection{\large{Cost}}
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.8]{images/cost.png}
-\end{figure}
+\begin{table}[H]
+\center
+\begin{tabular}{m{1.7cm} m{1.4cm} m{1.4cm}}
+\toprule
+Name & Price & Quantity\\
+\midrule
+ESP32-S3 & 3 dollars &1\\\\
+Laptop & 1000 dollars & 1\\\\
+Apple TV 4k & 150 dollars & 1\\\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 
 \section{\large{Specification}}
