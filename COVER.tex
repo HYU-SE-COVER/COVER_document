@@ -332,12 +332,19 @@ When the LG Cover is not in progress of connecting devices, LG Cover displays da
 \section{\large{Development Environment}}
 
 \subsection{\large{Choice of hardware development environment}}
-Needs and requirements for Hardware:\\
-\begin{enumerate}[label=\arabic*.]
-\item Support for Bluetooth and Wifi(IEEE 802.11n)\\
-\item Processor should be sufficient enough for all use cases (so no 8bit AVR / PIC)\\
-\item Have decent ecosystem for development\\
-\end{enumerate}
+\begin{itemize}
+\item Consideratoins for Matter\\
+\begin{figure}[H]\centering \includegraphics[scale=0.25]{images/consideratoins-matter.png}\end{figure}
+\item Requirements for Matter\\
+As you can see from Matter’s formal name CHIP (Connected home IP) it runs on existing IP. However, there is bit of difference in PHY layer that it could use Thread running on IEEE 802.15.4 radio instead of WiFi on IEEE 802.11 radio.\\
+For Matter enabled devices and especially a Matter hub that connects with various devices, most likely it would require 802.11, 802.15.4 and BLE connectivity.  It would be very cost prohibitive and detrimental to implement various radios one by one with generic off the shelf 8 bit microcontroller such as AVR or PIC, and workload required for matter is questionable for it to run on old, almost deprecated 8bit MCUs of past. While we could use 32 bit microcontroller such as ARM cortex lineup to solve the processor performance issue, it would still leave the issue of having to implement such radios.\\
+It would be much better off with dedicated SoC with everything needed implemented, ready to go. While designing customized chip is completely outside of this scope, thankfully there already exists a MCU supporting Wifi, Thread, and BLE in one single convenient package; ESP32 series.\\
+\item ESP32\\
+ESP32 is a series of low-cost, low-power system on a chip microcontrollers with integrated Wi-Fi and dual-mode Bluetooth. The ESP32 series employs either a Tensilica Xtensa LX6 microprocessor in both dual-core and single-core variations, Xtensa LX7 dual-core microprocessor or a single-core RISC-V microprocessor and includes built-in antenna switches, RF balun, power amplifier, low-noise receive amplifier, filters, and power-management modules. ESP32 is created and developed by Espressif Systems, a Chinese company based in Shanghai, and is manufactured by TSMC using their 40 nm process. It is a successor to the ESP8266 microcontroller.\\
+Since the release of the original ESP32, a number of variants have been introduced and announced. They form the ESP32 family of microcontrollers. These chips have different CPUs and capabilities, but all share the same SDK and are largely code-compatible.\\
+A minimal table to compare the Espressif's MCU families.\\
+While ESP32-C6 seems like a best choice since it has 802.15.4 capability, It is currently logistically difficult to get a development board. So we had to opt for ESP32-S3, while lacking 802.15.4 support, as current state of 802.15.4 Thread have long way to go before going mainstream we concluded it was not vital.\\
+\end{itemize}
 
 \textbf{ESP32-S3} is a dual-core XTensa LX7 MCU, capable of running at 240 MHz. Apart from its 512 KB of internal SRAM, it also comes with integrated 2.4 GHz, 802.11 b/g/n Wi-Fi and Bluetooth 5 (LE) connectivity that provides long-range support. It has 45 programmable GPIOs and supports a rich set of peripherals. ESP32-S3 supports larger, high-speed octal SPI flash, and PSRAM with configurable data and instruction cache.\\
 As we are not just building a virtual docker image, there is some considerations that have to be made.\\
