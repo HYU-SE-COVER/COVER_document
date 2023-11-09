@@ -589,13 +589,272 @@ Apple TV 4k & 150 dollars & 1\\\\
 \end{enumerate}
 
 \subsection{\large{Technical Specifications}}
-\begin{enumerate}[label=\arabic*.]
+\begin{itemize}
 \item \textbf{Connectivity}: Wi-Fi, NFC, Infrared (IR), and Matter protocol support.\\
 \item \textbf{Compatibility}: Works with LG and non-LG devices that support ThinQ, Matter, or IR.\\
 \item \textbf{Security}: Must use secure connections and encrypted communications.\\
 \item \textbf{APIs}: RESTful API for ThinQ for backend integration; Matter API for device communication.\\
 \item \textbf{User Interface}: ThinQ app for setup and control; home assistant interfaces for ongoing interaction.\\
 \item \textbf{Power}: Must support standard household power requirements and include power-saving modes.\\
+\end{itemize}
+
+
+\begin{enumerate}[label=\arabic*.]
+\item Hardware Specifications\\
+\begin{enumerate}[label=\alph*.]
+\item Microcontroller\\
+\begin{itemize}
+\item \textbf{Chip}: ESP32-S3\\
+\item \textbf{Core}: Dual-core XTensa LX7\\
+\item \textbf{Frequency}: 160 MHz\\
+\item \textbf{Logic Level}: 3.3V\\
+\item \textbf{Operating Voltage Range}: 3.0 to 3.6 V, with an over voltage protection up to 3.9 V for a duration of 10 ms\\
+\item \textbf{Low-Power Modes}: Supports Active, Modem Sleep, Light Sleep, Deep Sleep, and Hibernation power modes with wake-up via RTC, GPIO, or other peripherals\\
+\end{itemize}
+
+\item Memory\\
+\begin{itemize}
+\item \textbf{Flash}: 8MB\\
+\item \textbf{SRAM}: 512KB\\
+\item \textbf{PSRAM}: N/A\\
+\end{itemize}
+
+\item Power Management
+\begin{table}[ht]
+\setlength{\extrarowheight}{2.5pt}
+\centering
+\begin{tabular}{|c|l|c|c|c|c|}
+\hline
+\textbf{Parameter} & \multicolumn{1}{c|}{\textbf{Description}} & \textbf{Min} & \textbf{Typ} & \textbf{Max} & \textbf{Unit} \\ \hline
+VDDA, VDD3P3 & Recommended input voltage & 3.0 & 3.3 & 3.6 & V \\ \hline
+VDD3P3\_RTC & Recommended input voltage & 3.0 & 3.3 & 3.6 & V \\ \hline
+VDD\_SPI (as input) & --- & 1.8 & 3.3 & 3.6 & V \\ \hline
+VDD3P3\_CPU & Recommended input voltage & 3.0 & 3.3 & 3.6 & V \\ \hline
+\(I_{VDD}\) & Cumulative input current & 0.5 & --- & --- & A \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item \textbf{Supply Voltage}: 5v input voltage / with 3.3v logic level\\
+\item \textbf{Current Consumption}: less than 1A\\
+\item \textbf{Main Power Input}: USB Type-C with a surge protection of up to 20 V\\
+\item \textbf{Voltage Regulation}: 5V to 3.3V LDO or Buck Converter, capable of providing a minimum output current of 1 A, with ripple under 50 mV peak-to-peak\\
+\item \textbf{Regulator for 5v → 3.3v / AMS1117-3.3}:\\
+\begin{enumerate}[label=\roman*.]
+\item \textbf{Current}: Up to 800mA output current\\
+\item \textbf{Dropout Voltage}: ~1.1V at 800mA load\\
+\item \textbf{Package}: Available in SOT-223 and other packages\\
+\end{enumerate}
+\item \textbf{Power Sequencing}: Engineered for proper power-up and power-down sequences for MCU and peripherals\\
+\item \textbf{Power Monitoring}: On-chip ADC to monitor supply voltages and battery levels with interrupt-driven low-voltage warnings\\
+\end{itemize}
+
+\item I/O Connectivity\\
+\begin{itemize}
+\item \textbf{GPIO Pins}: Must allocate pins for IR receive / send\\
+\begin{enumerate}[label=\roman*.]
+\item The ESP32-S3 chip features 45 physical GPIO pins (GPIO0 ~ GPIO21 and GPIO26 ~ GPIO48). Each pin can be used as a general-purpose I/O, or be connected to an internal peripheral signal. Through GPIO matrix, IO MUX, and RTC IO MUX, peripheral input signals can be from any GPIO pin, and peripheral output signals can be routed to any GPIO pin. \\
+\item \textbf{Pin usage}:\\
+\begin{table}[ht]
+\setlength{\extrarowheight}{2.5pt}
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{GPIO} & \textbf{Analog Function} & \textbf{RTC GPIO} & \textbf{Comment} \\
+\hline
+GPIO0 &  & RTC\_GPIO0 & Strapping pin \\
+GPIO1 & ADC1\_CH0 & RTC\_GPIO1 &  \\
+GPIO2 & ADC1\_CH1 & RTC\_GPIO2 &  \\
+GPIO3 & ADC1\_CH2 & RTC\_GPIO3 & Strapping pin \\
+GPIO4 & ADC1\_CH3 & RTC\_GPIO4 &  \\
+GPIO5 & ADC1\_CH4 & RTC\_GPIO5 &  \\
+GPIO6 & ADC1\_CH5 & RTC\_GPIO6 &  \\
+GPIO7 & ADC1\_CH6 & RTC\_GPIO7 &  \\
+GPIO8 & ADC1\_CH7 & RTC\_GPIO8 &  \\
+GPIO9 & ADC1\_CH8 & RTC\_GPIO9 &  \\
+GPIO10 & ADC1\_CH9 & RTC\_GPIO10 &  \\
+GPIO11 & ADC2\_CH0 & RTC\_GPIO11 &  \\
+GPIO12 & ADC2\_CH1 & RTC\_GPIO12 &  \\
+GPIO13 & ADC2\_CH2 & RTC\_GPIO13 &  \\
+GPIO14 & ADC2\_CH3 & RTC\_GPIO14 &  \\
+GPIO15 & ADC2\_CH4 & RTC\_GPIO15 &  \\
+GPIO16 & ADC2\_CH5 & RTC\_GPIO16 &  \\
+GPIO17 & ADC2\_CH6 & RTC\_GPIO17 &  \\
+GPIO18 & ADC2\_CH7 & RTC\_GPIO18 &  \\
+GPIO19 & ADC2\_CH8 & RTC\_GPIO19 & USB-JTAG \\
+GPIO20 & ADC2\_CH9 & RTC\_GPIO20 & USB-JTAG \\
+GPIO21 &  & RTC\_GPIO21 &  \\
+... & ... & ... & ... \\
+GPIO45 &  &  & Strapping pin \\
+GPIO46 &  &  & Strapping pin \\
+GPIO47 &  &  &  \\
+GPIO48 &  &  &  \\
+\hline
+\end{tabular}
+\end{table}
+
+\end{enumerate}
+\item \textbf{UART}: 3.3V TTL, preset baud rate at 115200 for debug / upload purposes \\
+\item \textbf{SPI / I2C}: Not used\\
+\end{itemize}
+
+\item Security\\
+\begin{itemize}
+\item \textbf{Hardware Security}: AES-128/256, SHA, RSA, ECC, RNG\\
+\item \textbf{Secure Boot}: Enabled\\
+\item \textbf{Flash Encryption}: Enabled\\
+\end{itemize}
+
+\item Watchdog Timer (WDT)\\
+\begin{itemize}
+\item \textbf{Type}: Built-in hardware WDT\\
+\item \textbf{Timeout}: TBD\\
+\end{itemize}
+
+\item Infrared (IR) Capabilities\\
+\begin{itemize}
+\item \textbf{IR Receiver}:\\
+\begin{enumerate}[label=\roman*.]
+\item \textbf{Type}: 38 kHz demodulating IR receiver\\
+\item \textbf{Voltage}: 3.3V compatible\\
+\item \textbf{Range}: Around 10M depending on the environment. *further testing is needed\\
+\item \textbf{Compatibility}: Compatible with standard IR remote control protocols (e.g., NEC, RC5)\\
+\end{enumerate}
+\item \textbf{IR Transmitter}:\\
+\begin{enumerate}[label=\roman*.]
+\item \textbf{LED}: High-powered IR LED\\
+\item \textbf{Wavelength}: Typ. 940nm\\
+\item \textbf{Voltage}: 3.3V with current limiting resistor or driven via a high speed MOSFET\\
+\item \textbf{Range}:  Around 10M depending on the environment \textit{*further testing is needed}\\
+\item \textbf{Driver Circuit}: Software approach to modulation is CPU intensive; Hardware modulation circuit is recommended\\
+\end{enumerate}
+\end{itemize}
+
+\item IR Interface\\
+\begin{itemize}
+\item \textbf{IR Signal Encoding/Decoding}: Software-based, utilizing available libraries for encoding and decoding IR signals\\
+\item \textbf{IR Protocols Supported}: e.g., NEC, Sony, Philips\\
+\item \textbf{Carrier Frequency}: Programmable, to support various consumer electronics\\
+\end{itemize}
+
+\item Power Management for IR\\
+\begin{itemize}
+\item \textbf{Current Draw}: max. 20mA\\
+\end{itemize}
+
+\item GPIO Assignments for IR\\
+\begin{itemize}
+\item \textbf{IR Receiver Pin}: TBD\\
+\item \textbf{IR Transmitter Pin}: TBD\\
+\end{itemize}
+
+\item Connectivity\\
+\begin{itemize}
+\item \textbf{IR Capabilities}: As previously specified\\
+\item \textbf{Wi-Fi}:\\
+\begin{enumerate}[label=\roman*.]
+\item Complies with IEEE 802.11 b/g/n standards\\
+\item \textbf{Output Power}: Programmable up to +20 dBm in 1 dBm steps for control of range and power consumption\\
+\item \textbf{Receiver Sensitivity}: -98 dBm for 802.11 b, DSSS 1Mbps\\
+\item External IPEX connector for optional high-gain antenna\\
+\end{enumerate}
+\item \textbf{Bluetooth}:\\
+\begin{enumerate}[label=\roman*.]
+\item Bluetooth 5.0 with support for LE, Classic, and High Speed modes\\
+\item \textbf{Output Power}: Configurable from -20 dBm to +10 dBm\\
+\item \textbf{Receiver Sensitivity}: -97 dBm for BLE 1 Mbps PHY\\
+\item Bluetooth antenna diversity for improved range and reliability\\
+\end{enumerate}
+\end{itemize}
+\end{enumerate}
+
+
+\item Software Specifications\\
+\begin{enumerate}[label=\alph*.]
+\item Operating System\\
+\begin{itemize}
+\item \textbf{Firmware}: ESP-IDF, FreeRTOS\\
+\item \textbf{OTA Updates}: Support for Over-The-Air firmware upgrades\\
+\end{itemize}
+
+\item Matter Protocol Stack\\
+\begin{itemize}
+\item \textbf{Matter Version}: v1.2\\
+\item \textbf{Supported Features}:\\
+\begin{enumerate}[label=\roman*.]
+\item \textbf{Device Onboarding}: Implementation of secure onboarding processes compatible with the Matter standard. This includes support for QR code scanning, Bluetooth LE-based introduction, and Wi-Fi configuration transfer.\\
+\item \textbf{Device Type}: Supports multiple device types as defined by Matter specifications. For instance, the device can be configured as a smart light, a thermostat, a lock, or a sensor, depending on the actual hardware capabilities.\\
+\item \textbf{Commands and Events}: Ability to handle command and event interactions defined in Matter for device control and automation, such as turning on/off, adjusting parameters, or responding to environment changes.\\
+\item \textbf{Attribute Reporting}: Implementation of reporting attributes for each endpoint, in accordance with Matter's data model specifications. This allows the device to report its status, such as temperature readings or battery levels, to controllers and other devices.\\
+\item \textbf{Scheduling and Timers}: Support for scheduling actions and setting timers, allowing for automated device behavior such as turning a light on or off at specific times.\\
+\item \textbf{Group Messaging}: Enabling the device to participate in group communication, where a single command can control multiple devices, useful in scenarios like setting scenes or grouped actions.\\
+\item \textbf{Over-The-Air (OTA) Software Updates}: Secure mechanism for updating the device's firmware through the network, ensuring up-to-date functionality and security.\\
+\item \textbf{Interoperability}: Ensures that the device can work with other Matter-enabled devices and ecosystems, such as smart speakers, hubs, or smartphones, regardless of the manufacturer.\\
+\item \textbf{Security}: Compliance with Matter's security requirements, including secure session establishment, end-to-end encryption, and ongoing security maintenance.\\
+\end{enumerate}
+\end{itemize}
+
+\item Network Protocols\\
+\begin{itemize}
+\item \textbf{IPv4/IPv6}: Supported\\
+\item \textbf{mDNS}: Enabled for local discovery\\
+\item \textbf{MQTT/HTTP(s)}: For cloud communication (if applicable)\\
+\end{itemize}
+
+\item BLE Services\\
+\begin{itemize}
+\item \textbf{GATT}: Custom services and characteristics as per application requirements\\
+\item \textbf{Provisioning}: BLE-based network provisioning\\
+\end{itemize}
+
+\item Wi-Fi Features\\
+\begin{itemize}
+\item \textbf{Modes}: STA/AP/STA+AP\\
+\item \textbf{Provisioning}: SoftAP \& BLE based methods\\
+\end{itemize}
+
+\item Security Features\\
+\begin{itemize}
+\item \textbf{End-to-End Encryption}: For all network communication\\
+\item \textbf{Authentication}: Device attestation and mutual authentication in compliance with Matter specifications\\
+\end{itemize}
+
+\end{enumerate}
+
+
+\item Compliance and Certifications\\
+\begin{itemize}
+\item \textbf{Wi-Fi Alliance}\\
+\item \textbf{Bluetooth SIG}\\
+\item \textbf{Matter Compliance}: Certified by Connectivity Standards Alliance (CSA)\\
+\end{itemize}
+
+\item Environmental Conditions\\
+\begin{itemize}
+\item \textbf{Operating Temperature Range}: Industrial grade, from -40°C to +85°C\\
+\item \textbf{PCB Design}: 4-layer design with impedance matched traces for high-speed signals and thermal management\\
+\item \textbf{Enclosure}: IP-rated enclosure design compatible for desired level of ingress protection\\
+\item \textbf{Mounting Options}: PCB designed for surface-mount technology (SMT) and through-hole mounting points for secure enclosure attachment\\
+\end{itemize}
+
+\item Physical Dimensions\\
+\begin{itemize}
+\item \textbf{Size}: TBD\\
+\item \textbf{Weight}: TBD\\
+\end{itemize}
+
+\item Development and Debugging\\
+\begin{itemize}
+\item \textbf{Programming}: Via USB-to-UART Bridge\\
+\item \textbf{Debugging}: JTAG/SWD Interface (if applicable)\\
+\end{itemize}
+
+\item Regulatory Information\\
+\begin{itemize}
+\item \textbf{FCC ID}: N/A\\
+\item \textbf{CE}: N/A\\
+\item \textbf{RoHS Compliant}: Yes\\
+\end{itemize}
 \end{enumerate}
 
 \subsection{\large{User Documentation}}
