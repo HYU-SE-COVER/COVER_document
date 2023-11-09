@@ -520,74 +520,6 @@ Apple TV 4k & 150 dollars & 1\\\\
 
 \section{\large{Specification}}
 
-\subsection{\large{System Requirements}}
-\begin{enumerate}[label=\arabic*.]
-
-\item Installation and Registration of LG Cover to ThinQ App\\
-\begin{enumerate}[label=\alph*.]
-\item ThinQ App Registration\\
-\begin{enumerate}[label=\roman*.]
-\item User opens ThinQ app and taps the ‘+’ to add a new device.\\
-\item User selects the ‘matter’ button to add the LG Cover hub.\\
-\item User scans the QR code on LG Cover’s screen to register the device.\\
-\end{enumerate}
-\item Matter API Device Registration\\
-\begin{enumerate}[label=\roman*.]
-\item User opens the home assistant app and navigates to add a new device section.\\
-\item User selects ‘Matter’ or ‘Add Matter device’.\\
-\item User scans the QR code on LG Cover’s screen and confirms the addition to the home assistant.\\
-\end{enumerate}
-\end{enumerate}
-
-\item Registration of LG Cover to Matter API Device\\
-\begin{enumerate}[label=\alph*.]
-\item Matter Devices\\
-\begin{enumerate}[label=\roman*.]
-\item Added via the ThinQ app using the device’s QR code or setup code.\\
-\item Can also be registered directly to home assistants.\\
-\end{enumerate}
-\item ThinQ Devices\\
-\begin{enumerate}[label=\roman*.]
-\item Devices supporting ThinQ are automatically registered to LG Cover through the ThinQ app by scanning the QR code or selecting from a list.\\
-\end{enumerate}
-\item Legacy IR Devices\\
-\begin{enumerate}[label=\roman*.]
-\item Added by sending IR signals to LG Cover via remote controllers, which are matched to the device or manually set by the user.\\
-\end{enumerate}
-\end{enumerate}
-
-\item Device Registration Procedures\\
-\begin{enumerate}[label=\roman*.]
-\item LG Cover pulls device information from ThinQ and relays it to the home assistants.\\
-\item Matter devices communicate directly using Matter API.\\
-\item ThinQ devices send and receive commands via the ThinQ app and LG Cover.\\
-\item IR devices are controlled by converting Matter signals to IR signals via LG Cover.\\
-\end{enumerate}
-
-\item Control Device Using LG Cover\\
-\begin{enumerate}[label=\alph*.]
-\item Matter Devices\\
-\begin{enumerate}[label=\roman*.]
-\item Controlled by clusters and nodes for various functions through the home assistant.\\
-\end{enumerate}
-\item ThinQ Devices\\
-\begin{enumerate}[label=\roman*.]
-\item Simple and complicated controls are supported, with shortcuts for frequently used commands.\\
-\end{enumerate}
-\item IR Devices\\
-\begin{enumerate}[label=\roman*.]
-\item \textbf{LG products}: Full range of commands available for control via LG Cover.\\
-\item \textbf{Non-LG products}: Limited to simple controls such as power on/off.\\
-\end{enumerate}
-\end{enumerate}
-
-\item Default Display for LG Cover\\
-\begin{enumerate}[label=\roman*.]
-\item Displays date, time, temperature, and humidity when not in device connection mode.\\
-\end{enumerate}
-
-\end{enumerate}
-
 \subsection{\large{Technical Specifications}}
 \begin{itemize}
 \item \textbf{Connectivity}: Wi-Fi, NFC, Infrared (IR), and Matter protocol support.\\
@@ -597,7 +529,6 @@ Apple TV 4k & 150 dollars & 1\\\\
 \item \textbf{User Interface}: ThinQ app for setup and control; home assistant interfaces for ongoing interaction.\\
 \item \textbf{Power}: Must support standard household power requirements and include power-saving modes.\\
 \end{itemize}
-
 
 \begin{enumerate}[label=\arabic*.]
 \item Hardware Specifications\\
@@ -856,6 +787,139 @@ GPIO48 &  &  &  \\
 \item \textbf{RoHS Compliant}: Yes\\
 \end{itemize}
 \end{enumerate}
+
+
+\subsection{\large{Software Specifications}}
+\begin{enumerate}[label=\arabic*.]
+\item Login Page\\
+\begin{figure}[H]\centering \includegraphics[scale=0.35]{images/sw-spec-1.png}\end{figure}
+Upon launching the application, users are greeted by the Login Page, which is the primary gateway for accessing the personalized management features within the app. The Login Page is essential as it ensures secure access for users to control and interact with their devices through the COVER application.\\
+To begin, users are prompted to enter their username and password. For new users or those without login credentials, the page provides a series of features: 'Find ID / Reset Password,' 'Sign up,' and 'SNS login' options. The 'Sign up' process is a critical step in gaining access to the app's functionalities, leading users through a streamlined process to create their account.\\
+A top right button on the Login Page allows users to customize their experience by selecting their country and language, ensuring that the app meets their regional preferences and language understanding.\\
+When users complete the signup and hit the 'Register' button, the system initiates a Register Post API request to the server. Successful completion of this request redirects the user to the Login Page, where they can now log in with their new credentials.\\
+The input fields during the signup process have specific constraints to ensure data integrity and user identification. For instance, the name field requires 2 to 5 characters and accepts input directly via the keyboard. The username field permits 5 to 20 characters, allowing only English letters and numbers, while the password field demands 8 to 20 characters, also limited to English letters and numbers, with a re-entry required for confirmation.\\
+
+\item Main Page\\
+Upon logging in, the Main Page serves as the user's command center, presenting a comprehensive view of their registered devices within the application. The layout and functionality of this page are tailored to facilitate interaction with the user's smart home ecosystem.\\
+\begin{enumerate}[label=\alph*.]
+\item Main Page Overview\\
+\begin{figure}[H]\centering \includegraphics[scale=0.4]{images/sw-spec-2.png}\end{figure}
+The Main Page features:\\
+\begin{itemize}
+\item A display of all the user's registered devices, organized for quick navigation and management.\\
+\item Options to manage device settings, monitor device status, add new devices, and link devices to home assistants like Apple Home.\\
+\end{itemize}
+
+\item Top Navigation Bar (Top Nav)\\
+\begin{figure}[H]\centering \includegraphics[scale=0.5]{images/sw-spec-3.png}\end{figure}
+\begin{figure}[H]\centering \includegraphics[scale=0.5]{images/sw-spec-4.png}\end{figure}
+\begin{itemize}
+\item The Top Nav, accessible by swiping horizontally, houses multiple features for device interaction.\\
+\item The 'Register Product' menu item leads users to the Device Registration Page, enabling the addition of new devices to the system.\\
+\item Additional menu items, revealed by swiping, include shortcuts for quickly connecting all COVER-registered devices to home assistants.\\
+\end{itemize}
+
+\item Devide Organization\\
+\begin{figure}[H]\centering \includegraphics[scale=0.35]{images/sw-spec-5.png}\end{figure}
+\begin{itemize}
+\item Devices are displayed in a grid layout below the Top Nav, categorized by their physical location (e.g., 'living room') or the hub they are connected to.\\
+\item Each device is represented by a tile that includes an icon indicating the device type, the device name, and its current status (e.g., on/off).\\
+\item The '+' button at the end of each device category facilitates the registration of new devices to specific locations.\\
+\end{itemize}
+
+\item Device Tiles\\
+\begin{figure}[H]\centering \includegraphics[scale=0.6]{images/sw-spec-6.png}\end{figure}
+\begin{figure}[H]\centering \includegraphics[scale=0.6]{images/sw-spec-7.png}\end{figure}
+\begin{figure}[H]\centering \includegraphics[scale=0.6]{images/sw-spec-8.png}\end{figure}
+Device tiles provide at-a-glance information:\\
+\begin{itemize}
+\item The upper left corner of each tile features a device-specific icon.\\
+\item The device name is located just below the icon.\\
+\item The current status of the device is displayed, with the available statuses varying by device type.\\
+\item The bottom right corner of each tile indicates the device's connection type (Matter, LG ThinQ, or IR), each with a corresponding icon.\\
+\begin{table}[ht]
+\setlength{\extrarowheight}{2.5pt}
+\centering
+\begin{tabular}{|c|l|}
+\hline
+\textbf{Device Type} & \textbf{Status} \\
+\hline
+Light & On/Off \\
+ & Brightness \\
+ & Color temperature \\
+ & Reservation information \\
+\hline
+Air Conditioner & On/Off \\
+ & Temperature \\
+ & Mode \\
+ & Reservation information \\
+\hline
+TV & On/Off \\
+ & Currently playing content \\
+\hline
+Air Purifier & On/Off \\
+ & Air quality \\
+ & Reservation information \\
+\hline
+Wine Cellar & On/Off \\
+ & Temperature \\
+\hline
+Vacuum Cleaner & On/Off \\
+ & Charging \\
+\hline
+Washing Machine & On/Off \\
+ & Reservation information \\
+\hline
+\end{tabular}
+\end{table}
+
+\end{itemize}
+
+\item Interaction and Design\\
+\begin{itemize}
+\item The Main Page is designed to be intuitive and user-friendly, allowing for efficient management of the user's smart home devices.\\
+\item The interface is clean and organized, ensuring that users can easily find and operate their devices.\\
+\item The design is consistent with the application's overall aesthetic, providing a seamless user experience.\\
+\end{itemize}
+\end{enumerate}
+
+
+\item Bind with Matter Page\\
+\begin{figure}[H]\centering \includegraphics[scale=0.4]{images/sw-spec-9.png}\end{figure}
+Upon accessing the Bind with Matter Page within the application, users are presented with a streamlined process to integrate their COVER-managed devices with Apple Home, harnessing the power of the Matter protocol. This page is designed to be a straightforward junction point between COVER and Apple Home, with a couple of pivotal actions available for the user to initiate the integration.\\
+Users can secure their setup by using the ‘QR 저장’ button to save the QR code, a crucial step that anchors the device to their account. Alternatively, they can use the ‘코드 복사’ button to copy the COVER setup code, allowing for a manual connection if needed. These options cater to different user preferences, ensuring versatility in the setup process.\\
+Advancing in the setup, the ‘Matter 자동 연결하기’ button is a significant feature on this page. With a simple press, users command the application to proceed with the automatic registration of COVER to Apple Home. This button effectively initiates a seamless transition to Apple Home’s accessory addition page, where the previously registered devices on COVER become part of the Apple Home ecosystem, ready for centralized control.\\
+However, users must be aware of certain limitations inherent to the system's design. Notably, when connecting COVER with Apple Home through Matter, there is a cap on the number of devices that can be managed. The system currently supports a maximum of 30 devices linked to COVER. This limit is set to ensure that each device maintains a robust and reliable connection within the smart home network. Attempting to add more than 30 devices could lead to potential performance issues, affecting both the new and existing devices' functionality.\\
+This limitation emphasizes the importance of strategic planning in the user's smart home setup. For those users who wish to exceed the 30-device threshold, exploring additional configurations, such as incorporating another hub, may be necessary to distribute the network load and maintain system integrity.\\
+In conclusion, the Bind with Matter Page serves as a gateway for users to expand and centralize their smart home control within Apple Home. While designed for ease of use and convenience, it operates within the defined device limitation to ensure optimal performance across the smart home network. Users should navigate this page with an understanding of these parameters to fully leverage the capabilities of their COVER and Apple Home integrated experience.\\
+\begin{figure}[H]\centering \includegraphics[scale=0.5]{images/sw-spec-10.png}\end{figure}
+
+\item Device Registration Page\\
+The Device Registration Page acts as the gateway for incorporating new devices into the user's smart home setup, featuring a methodical and comprehensive approach for adding devices via various protocols like Matter, LG ThinQ, and Infrared (IR).\\
+\begin{enumerate}[label=\alph*.]
+\item Matter and LG ThinQ Device Registration\\
+\begin{figure}[H]\centering \includegraphics[scale=0.35]{images/sw-spec-11.png}\end{figure}
+Upon landing on the Device Registration Page, users are prompted to register their Matter or LG ThinQ devices by scanning a QR code. The page activates the camera on the user's mobile device, allowing for the QR code to be read seamlessly. The system is intuitive enough to distinguish between a Matter QR code and an LG ThinQ QR code:\\
+\begin{itemize}
+\item \textbf{For Matter Devices}: The system, upon recognizing a Matter device's QR code, proceeds to automatically add the device to the user’s profile, integrating it into the smart home network without additional steps.\\
+\item \textbf{For LG ThinQ Devices}: If the QR code corresponds to an LG ThinQ device, the user is redirected to a specialized LG ThinQ Registration Page. This page not only displays the device's specifics, such as its type and model name, but also an image for visual confirmation. Here, the user can finalize the registration by pressing the '추가하기' button. This action triggers the system to store all relevant information, including control commands and status features, within LG's comprehensive database. Subsequently, COVER gains access to these details, allowing the user to manage the device via the COVER interface.\\
+\begin{figure}[H]\centering \includegraphics[scale=0.35]{images/sw-spec-12.png}\end{figure}
+\end{itemize}
+\item IR Device Registration\\
+\begin{figure}[H]\centering \includegraphics[scale=0.35]{images/sw-spec-13.png}\end{figure}
+For devices that operate via IR, especially those that do not support QR code scanning, the registration process is facilitated through an alternative method:\\
+\begin{itemize}
+\item \textbf{For LG IR Devices}: Users can initiate the setup by clicking the ‘다른 방법으로 추가할래요’ (Add in another way) button, which redirects them to the IR Registration Page. If the IR device is manufactured by LG, users can fetch the remote control settings from LG's database by pressing the ‘LG 리모컨 설정 가져오기’ (Retrieve LG remote control settings) button. The system then presents a list of devices matching the entered serial number from which the user can select the appropriate one.\\
+\begin{figure}[H]\centering \includegraphics[scale=0.5]{images/sw-spec-14.png}\end{figure}
+\item \textbf{For Non-LG IR Devices}: When dealing with non-LG IR devices, the process requires the user to manually transmit the IR signal from the device's remote control to COVER. This is done by selecting the type of device they wish to register and following the prompts to transmit each function's corresponding signal. For instance, if registering a lighting device, COVER's interface will guide the user to input signals for power, brightness, and color temperature adjustments. As the user matches and transmits these signals, they are captured and stored by COVER for future command executions.\\
+\begin{figure}[H]\centering \includegraphics[scale=0.4]{images/sw-spec-15.png}\end{figure}
+During the IR signal transmission process, the user is provided with a visual indicator, such as a loading bar, to denote the progress of the signal capture. Once a signal is successfully stored, the interface is designed to revert to the remote control display, enabling the user to proceed with storing additional signals for different commands.\\
+\begin{figure}[H]\centering \includegraphics[scale=0.4]{images/sw-spec-16.png}\end{figure}
+\end{itemize}
+\end{enumerate}
+\end{enumerate}
+
+
 
 \subsection{\large{User Documentation}}
 \begin{enumerate}[label=\arabic*.]
