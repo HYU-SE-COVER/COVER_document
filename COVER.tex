@@ -18,6 +18,7 @@
 \usepackage{subfigure}
 \usepackage{float}
 \usepackage{booktabs}
+\usepackage{array}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
@@ -343,6 +344,55 @@ It would be much better off with dedicated SoC with everything needed implemente
 ESP32 is a series of low-cost, low-power system on a chip microcontrollers with integrated Wi-Fi and dual-mode Bluetooth. The ESP32 series employs either a Tensilica Xtensa LX6 microprocessor in both dual-core and single-core variations, Xtensa LX7 dual-core microprocessor or a single-core RISC-V microprocessor and includes built-in antenna switches, RF balun, power amplifier, low-noise receive amplifier, filters, and power-management modules. ESP32 is created and developed by Espressif Systems, a Chinese company based in Shanghai, and is manufactured by TSMC using their 40 nm process. It is a successor to the ESP8266 microcontroller.\\
 Since the release of the original ESP32, a number of variants have been introduced and announced. They form the ESP32 family of microcontrollers. These chips have different CPUs and capabilities, but all share the same SDK and are largely code-compatible.\\
 A minimal table to compare the Espressif's MCU families.\\
+\\\\\\\\\\\\
+\item Comparison of ESP32, ESP32-S3, and ESP32-C6
+\setlength{\extrarowheight}{2.5pt}
+\begin{table}[H]
+\centering
+\begin{tabular}{|m{1.8cm}|m{1.8cm}|m{1.8cm}|m{1.8cm}|}
+\hline
+\textbf{Model} & \textbf{ESP32} & \textbf{ESP32-S3} & \textbf{ESP32-C6} \\
+\hline
+\textbf{Announcement Date} & 2016, September & 2020, December & 2021, April \\
+\textbf{Main processor} & Tensilica Xtensa 32-bit LX6 (up to 240MHz) (optionally dual core) & Tensilica Xtensa 32-bit LX7 dual core (up to 240MHz) & RISC-V 32-bit (up to 160MHz) \\
+\textbf{SRAM} & 520KB & 512KB & 400KB \\
+\textbf{ROM} & 448KB & 384KB & 384KB \\
+\textbf{JTAG} & O & ? & O \\
+\textbf{Cache} & 64KB & ? & ? \\
+\textbf{WiFi} & Wi-Fi 4 & Wi-Fi 4 & Wi-Fi 6 \\
+\textbf{Bluetooth} & BLE 4.2 (upgrade to 5.0, with limitations) & BLE 5.0 & BLE 5.0 \\
+\textbf{Ethernet} & O & ? & ? \\
+\textbf{RTC memory} & 16KB & 16KB & ? \\
+\textbf{PMU} & O & ? & ? \\
+\textbf{ULP coprocessor} & O & ? & ? \\
+\textbf{Cryptographic Accelerator} & SHA, RSA, AES, RNG & SHA, RSA, AES, RNG, HMAC, Digital Signature & SHA, RSA, AES, RNG, HMAC, Digital Signature \\
+\textbf{Secure boot} & O & O & O \\
+\textbf{Flash encryption} & O & O & XTS-AES-128 \\
+\textbf{SPI} & 4 & ? & ? \\
+\textbf{I2C} & 2 & ? & ? \\
+\textbf{I2S} & 2 & ? & ? \\
+\textbf{UART} & 3 & ? & ? \\
+\textbf{SDIO Host} & 1 & 2 & 0 \\
+\textbf{SDIO Slave} & 1 & 0 & 0 \\
+\textbf{GPIO} & 34 & 44 & 22 \\
+\textbf{LED PWM} & 16 & ? & ? \\
+\textbf{MCPWM} & 6 & 2 & 0 \\
+\textbf{Pulse counter} & 8 & ? & X \\
+\textbf{GDMA*} & 0 & ? & ? \\
+\textbf{USB} & X & ? & ? \\
+\textbf{TWAI**} & 1 & ? & ? \\
+\textbf{ADC} & 2x 12-bit SAR, up to 18 channels & ? & ? \\
+\textbf{DAC} & 2x 8-bit & ? & X \\
+\textbf{RMT} & 8x transmission/reception & ? & ? \\
+\textbf{Timer} & 4x 64-bit & ? & ? \\
+\textbf{Temperature Sensor} & O & ? & ? \\
+\textbf{Hall Sensor} & O & ? & ? \\
+\textbf{Touch Sensor} & 10 & ? & ? \\
+\hline
+\end{tabular}
+\end{table}
+
+
 While ESP32-C6 seems like a best choice since it has 802.15.4 capability, It is currently logistically difficult to get a development board. So we had to opt for ESP32-S3, while lacking 802.15.4 support, as current state of 802.15.4 Thread have long way to go before going mainstream we concluded it was not vital.\\
 \end{itemize}
 
@@ -419,6 +469,10 @@ ESP-IDF is Espressif’s official IoT Development Framework for the ESP32, ESP32
 C is a procedural high-level programming language that is designed to provide efficient access to memory and language constructs that map efficiently to machine instructions. C++ supports both procedural and object-oriented programming paradigms, and provides features such as overloading, templates, and exceptions, which are not available in C. The core components of ESP-IDF and the APIs provided for interacting with the ESP32 hardware are written in C. This allows for efficient interaction with the hardware and is suitable for the resource-constrained environments typically associated with embedded systems. The framework provides support for C++ exceptions and other features, allowing developers to leverage the object-oriented aspects of C++ in their ESP32 projects.\\
 \item xtensa-esp-elf\\
 xtensa-esp-elf is a toolchain for 32-bit Xtensa microcontrollers, based on GCC. It provides all the necessary tools to transform high-level code into a binary form that the microcontroller can execute, handling the specifics of the Xtensa architecture, including its custom instructions and configurations. xtensa-esp-elf includes a collection of binaries such as an assembler, linker, and archiver that prepare the code for execution on the microcontroller. The compiler, extensa-esp-elf-gcc, is the customized version of GCC provided by Espressif, tailored specifically for the Xtensa architecture of ESP32 and ESP32-S series. It allows developers to compile C and C++ code into efficient machine language that can run directly on the low-level hardware. This version of GCC has been optimized to harness the unique features and capabilities of the ESP32's processor, ensuring that developers can maximize performance for a variety of applications, from simple IoT devices to complex networking systems, while leveraging the rich set of features and the robust development framework provided by ESP-IDF. Since the Xtensa cores are different from the architecture of a typical development computer (x86\_64 or arm), the xtensa-esp-elf-gcc performs cross-compilation, generating executable code for a different architecture than that of the build host. The xtensa-esp-elf toolchain is versatile and supports development across multiple operating systems, including Linux, macOS, and Windows, thus enabling a wide range of developers to create applications for Espressif's hardware platforms regardless of their preferred development OS.\\
+\item CMake\\
+CMake is a cross-platform, open-source build system generator widely used for managing the build processes of software in a compiler-independent manner. It enables developers to define build configurations using simple, platform- and compiler-agnostic configuration files, known as makefile. The primary function of CMake is to control the software compilation process using simple platform and compiler-independent configuration files to generate native makefiles or project files that can be used in the compiler environment of your choice. CMake supports out-of-source builds, allowing for multiple build types to be generated from a single source tree and facilitating cleaner build directories and easier maintenance. It is equipped to handle large projects spanning multiple directories and can also manage complex dependency chains between components. With its ability to target various platforms and its extensive scripting capabilities, CMake has become a go-to tool for developers looking to streamline their build processes and improve portability and scalability of their software projects.\\
+\item Ninja\\
+Ninja is a small build system with a focus on speed. It takes as input the build files generated by tools like CMake and executes the build as efficiently as possible. Unlike CMake, which is a build system generator, Ninja is the actual build system that does the compiling, linking, and other build steps. Ninja aims to outperform other build systems by using simple build files and aggressively caching intermediate build results to minimize redundant work. This design philosophy makes Ninja particularly well-suited for large codebases and for continuous integration systems where build times can significantly affect the development workflow. Although Ninja is not designed to be written by humans directly, its simplicity and high performance have made it an attractive backend for build system generators that prioritize speed and efficiency.\\
 \item React Native\\
 React Native is an open-source framework developed by Facebook for creating native-style mobile apps using React and JavaScript. It enables developers to build applications for multiple platforms, including iOS and Android, with a single codebase, leveraging a rich ecosystem of libraries and tools. Its component-based structure allows for the reuse of code across different platforms, while maintaining the ability to integrate with native functionality and third-party libraries. The framework's live and hot reloading capabilities significantly enhance developer productivity, and its large community provides strong support, with contributions extending its reach to platforms like Windows and macOS. Given these benefits, a significant number of developers opt for React Native to create mobile applications that deliver a native user experience with the agility of web app development.\\
 \item Go\\
