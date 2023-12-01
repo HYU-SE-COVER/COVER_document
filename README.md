@@ -1,4 +1,4 @@
-# COVER_document
+# Cover-document
 
 ## Introduction
 
