@@ -494,8 +494,6 @@ LaTeX is a high-quality typesetting system; it includes features designed for th
 Notion is an all-in-one workspace application designed to integrate notes, tasks, wikis, and databases into a single, user-friendly interface, promoting productivity and organization for both personal and professional use. It offers a highly flexible environment where users can create custom pages and databases with rich content types, such as text, images, checklists, and links, and connect these elements in a modular way. Notion's powerful organizational tools, including nested pages, tagging, and sorting, allow for detailed knowledge management and project tracking. Its collaborative features enable real-time teamwork and sharing, making it popular among remote teams, students, and individuals seeking a centralized platform to manage their work and studies. With its sleek design and versatile functionality, Notion stands out as a multifaceted tool that adapts to various workflows and simplifies the integration of diverse information and task management.\\
 \end{enumerate}
 
-\subsection{\large{Specification}}
-
 \subsection{\large{Cost}}
 \begin{table}[H]
 \center
@@ -509,7 +507,6 @@ Apple TV 4k & 150 dollars & 1\\\\
 \bottomrule
 \end{tabular}
 \end{table}
-
 
 \section{\large{Specification}}
 
@@ -616,8 +613,8 @@ GPIO48 &  &  &  \\
 \hline
 \end{tabular}
 \end{table}
-
 \end{enumerate}
+
 \item \textbf{UART}: 3.3V TTL, preset baud rate at 115200 for debug / upload purposes \\
 \item \textbf{SPI / I2C}: Not used\\
 \end{itemize}
@@ -927,6 +924,37 @@ During the IR signal transmission process, the user is provided with a visual in
 \item Detailed setup guide for LG Cover and device registration.\\
 \item Troubleshooting tips for common issues during setup or use.\\
 \item Contact information for support.\\
+\end{enumerate}
+
+
+\section{\large{Architecture Design Implementation}}
+
+\begin{enumerate}[label=\alph*.]
+\item Overall Architecture\\
+\begin{figure}[H]\centering \includegraphics[scale=0.25]{images/structure.png}\end{figure}
+\end{enumerate}
+
+
+\section{\large{Use Cases}}
+\begin{enumerate}[label=\alph*.]
+\item Use Case 1: Turn On the Application\\
+When the user taps the Cover app icon, the app opens displaying the phrase “LG COVER”, and the app is launched.\\
+
+\item Use Case 2: Sign In\\
+After registering, the user logs in. The login screen features the LG Cover logo along with Made for matter, ThinQ, and IR logos. Below, there are fields to enter the user's ID and password for login. The ID can be the user's email or phone number. Options for ID recovery, password reset, and SNS login are also available. The login proceeds when the user enters the correct ID and password and presses the login button.\\
+
+\item Use Case 3: Register LG Cover\\
+The user registers their purchased LG Cover in the Cover app. This is done through the “Register Product” button on the main screen.\\
+
+\item Use Case 4: Register Device to LG Cover\\
+To add a device to Cover, the user presses the + button on the main screen, which leads to a screen for scanning QR codes. Here, the camera can recognize the ThinQ connection QR code or Matter connection QR code of the device to be added. Once the QR code is recognized, the device is added to the main screen. If the device does not have a QR code, the user presses the “Can’t find QR?” button. If the additional device does not have a QR code, it is based on IR, thus the user is directed to the IR remote control settings screen.\\
+
+\item Use Case 5: Control Device\\
+If the added device supports Matter or ThinQ, the user clicks its icon on the main screen. Through the control panel that appears next, the device can be operated. If the device does not support Matter or ThinQ, the following steps are taken:\\
+If the device to be controlled is an LG product, the user presses the “Import LG Remote Control Settings” button. Pressing this button leads to a serial number input page. Entering the device's serial number allows the user to control it with the corresponding remote control. If the product is not from LG, the user selects the type of device (e.g., air conditioner, lights, air purifier) from various buttons. Pressing the button leads to the 'IR Auto Connection' screen. The “Start Matching” button detects nearby IR device remotes for pairing, and successful pairing allows the use of the remote control in the Cover app.\\
+
+\item Use Case 6: Integration\\
+The user can register multiple devices in LG Cover to Apple Home for collective connection. From the main screen, pressing the “Connect All at Once” button leads to the ‘Connect via Matter’ screen. This screen displays a list of devices connected via QR codes. Scanning the QR code with a phone allows all connected devices to be registered on Apple Home.\\
 \end{enumerate}
 
 
